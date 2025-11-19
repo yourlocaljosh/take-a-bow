@@ -1,8 +1,8 @@
 {
 	"schemaVersion": 1,
-	"id": "take-a-bow",
+	"id": "takeabow",
 	"version": "${version}",
-	"name": "take a bow",
+	"name": "takeabow",
 	"description": "This is an example description! Tell everyone what your mod is about!",
 	"authors": [
 		"Me!"
@@ -12,20 +12,20 @@
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/take-a-bow/icon.png",
+	"icon": "assets/takeabow/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.klism.TakeABow"
+			"com.klism.Takeabow"
 		],
 		"client": [
-			"com.klism.TakeABowClient"
+			"com.klism.TakeabowClient"
 		]
 	},
 	"mixins": [
-		"take-a-bow.mixins.json",
+		"takeabow.mixins.json",
 		{
-			"config": "take-a-bow.client.mixins.json",
+			"config": "takeabow.client.mixins.json",
 			"environment": "client"
 		}
 	],
