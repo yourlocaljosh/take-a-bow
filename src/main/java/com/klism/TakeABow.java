@@ -10,8 +10,9 @@ public class Takeabow implements ModInitializer{
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	@Override
-	public void onInitialize(){
-		LOGGER.info("Initializing Take A Bow mod!");
+	public void onInitialize() {
+		//debugger
+		LOGGER.info("Initializing Take A Bow mod");
 		ModItems.registerModItems();
 	}
 }
