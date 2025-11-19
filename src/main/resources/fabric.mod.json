@@ -1,8 +1,8 @@
 {
 	"schemaVersion": 1,
 	"id": "takeabow",
-	"version": "0.01",
-	"name": "takeabow",
+	"version": "0.02",
+	"name": "Take a Bow",
 	"description": "All about bows",
 	"authors": [
 		"joshsw"
