@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 public class ShortBowItem extends Item{
 
     private static final float PULL_PROGRESS = 0.65F; // 65% power
+    private static final int COOLDOWN_TICKS = 10; //10 tick cooldown between shot
 
     public ShortBowItem(Settings settings){
         super(settings);
@@ -29,6 +30,10 @@ public class ShortBowItem extends Item{
     @Override
     public ActionResult use(World world, PlayerEntity user, Hand hand){
         ItemStack bowStack = user.getStackInHand(hand);
+
+        if(user.getItemCooldownManager().isCoolingDown(bowStack)){
+            return ActionResult.PASS;
+        }
 
         ItemStack arrowStack = user.getProjectileType(this.getDefaultProjectileStack());
 
@@ -56,6 +61,9 @@ public class ShortBowItem extends Item{
         );
 
         user.incrementStat(Stats.USED.getOrCreateStat(this));
+
+        //Set firing cooldown
+        user.getItemCooldownManager().set(bowStack, COOLDOWN_TICKS);
 
         return ActionResult.CONSUME;
     }
