@@ -21,13 +21,6 @@
 			"com.klism.TakeabowClient"
 		]
 	},
-	"mixins": [
-		"takeabow.mixins.json",
-		{
-			"config": "takeabow.client.mixins.json",
-			"environment": "client"
-		}
-	],
 	"depends": {
 		"fabricloader": ">=0.17.3",
 		"minecraft": "~1.21.10",
