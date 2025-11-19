@@ -1,11 +1,15 @@
 package com.klism.item;
 
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ChargedProjectilesComponent;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
+import net.minecraft.item.*;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -14,11 +18,9 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-import java.util.List;
+public class ShortBowItem extends Item{
 
-public class ShortBowItem extends BowItem{
-
-    private static final float PULL_PROGRESS = 0.65F;
+    private static final float PULL_PROGRESS = 0.65F; // 65% power
 
     public ShortBowItem(Settings settings){
         super(settings);
@@ -27,13 +29,18 @@ public class ShortBowItem extends BowItem{
     @Override
     public ActionResult use(World world, PlayerEntity user, Hand hand){
         ItemStack bowStack = user.getStackInHand(hand);
-        ItemStack arrowStack = user.getProjectileType(bowStack);
+
+        ItemStack arrowStack = user.getProjectileType(this.getDefaultProjectileStack());
 
         if(arrowStack.isEmpty() && !user.getAbilities().creativeMode){
             return ActionResult.FAIL;
         }
 
         if(world instanceof ServerWorld serverWorld){
+            if(arrowStack.isEmpty()){
+                arrowStack = new ItemStack(Items.ARROW);
+            }
+
             shootArrow(serverWorld, user, hand, bowStack, arrowStack);
         }
 
@@ -55,21 +62,18 @@ public class ShortBowItem extends BowItem{
 
     private void shootArrow(ServerWorld world, PlayerEntity shooter, Hand hand,
                             ItemStack bowStack, ItemStack arrowStack){
-        ItemStack projectileStack = arrowStack.isEmpty() ? new ItemStack(Items.ARROW) : arrowStack.copy();
+        ArrowEntity arrowEntity = new ArrowEntity(world, shooter, arrowStack.copyWithCount(1), bowStack);
 
-        List<ItemStack> projectiles = List.of(projectileStack);
-
-        this.shootAll(
-                world,
+        arrowEntity.setVelocity(
                 shooter,
-                hand,
-                bowStack,
-                projectiles,
+                shooter.getPitch(),
+                shooter.getYaw(),
+                0.0F,
                 PULL_PROGRESS * 3.0F,
-                1.0F,
-                false,
-                null
+                1.0F
         );
+
+        world.spawnEntity(arrowEntity);
 
         if(!shooter.getAbilities().creativeMode){
             arrowStack.decrement(1);
@@ -82,12 +86,10 @@ public class ShortBowItem extends BowItem{
         bowStack.damage(1, shooter, slot);
     }
 
-    @Override
-    public int getMaxUseTime(ItemStack stack, LivingEntity user){
-        return 0;
+    private ItemStack getDefaultProjectileStack(){
+        return new ItemStack(Items.ARROW);
     }
 
-    @Override
     public int getRange(){
         return 15;
     }
