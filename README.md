@@ -1,4 +1,5 @@
 # Take a Bow
+v0.2
 
 ## About
 Fabric mod for Minecraft 1.21.10 that adds the Shortbow, a bow alternative that fires instantly!
