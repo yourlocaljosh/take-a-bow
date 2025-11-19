@@ -10,13 +10,11 @@ import net.minecraft.util.Identifier;
 
 public class ModItems{
 
-    public static final Item SHORTBOW = registerItem("shortbow",
-            new ShortBowItem(new Item.Settings().maxDamage(384)));
-
-    private static Item registerItem(String name, Item item){
-        return Registry.register(Registries.ITEM,
-                Identifier.of(Takeabow.MOD_ID, name), item);
-    }
+    public static final Item SHORTBOW = Registry.register(
+            Registries.ITEM,
+            Identifier.of(Takeabow.MOD_ID, "shortbow"),
+            new ShortBowItem(new Item.Settings().maxDamage(384))
+    );
 
     public static void registerModItems(){
         Takeabow.LOGGER.info("Registering items for " + Takeabow.MOD_ID);
