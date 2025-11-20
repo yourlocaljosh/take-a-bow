@@ -87,4 +87,8 @@ public class ShortBowItem extends Item{
         EquipmentSlot slot = hand == Hand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
         bowStack.damage(1, shooter, slot);
     }
+
+    public int getRange(){
+        return 15;
+    }
 }
