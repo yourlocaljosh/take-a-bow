@@ -1,14 +1,8 @@
 package com.klism.item;
 
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ChargedProjectilesComponent;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -35,7 +29,7 @@ public class ShortBowItem extends Item{
             return ActionResult.PASS;
         }
 
-        ItemStack arrowStack = user.getProjectileType(this.getDefaultProjectileStack());
+        ItemStack arrowStack = user.getProjectileType(bowStack);
 
         if(arrowStack.isEmpty() && !user.getAbilities().creativeMode){
             return ActionResult.FAIL;
@@ -92,13 +86,5 @@ public class ShortBowItem extends Item{
 
         EquipmentSlot slot = hand == Hand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
         bowStack.damage(1, shooter, slot);
-    }
-
-    private ItemStack getDefaultProjectileStack(){
-        return new ItemStack(Items.ARROW);
-    }
-
-    public int getRange(){
-        return 15;
     }
 }
