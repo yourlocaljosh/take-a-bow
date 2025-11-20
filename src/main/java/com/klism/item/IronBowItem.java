@@ -17,7 +17,7 @@ import java.util.List;
 
 public class IronBowItem extends BowItem{
 
-    private static final int FULL_CHARGE_TICKS = 35;
+    private static final int FULL_CHARGE_TICKS = 40;
     private static final float VELOCITY_MULTIPLIER = 4.0F;
 
     public IronBowItem(Settings settings){
