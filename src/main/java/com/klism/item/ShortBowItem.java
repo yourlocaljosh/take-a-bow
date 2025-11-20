@@ -29,7 +29,22 @@ public class ShortBowItem extends Item{
             return ActionResult.PASS;
         }
 
-        ItemStack arrowStack = user.getProjectileType(bowStack);
+        ItemStack arrowStack = ItemStack.EMPTY;
+
+        ItemStack offhandStack = user.getOffHandStack();
+        if(offhandStack.getItem() instanceof net.minecraft.item.ArrowItem){
+            arrowStack = offhandStack;
+        }
+
+        if (arrowStack.isEmpty()) {
+            for (int i = 0; i < user.getInventory().size(); i++) {
+                ItemStack stack = user.getInventory().getStack(i);
+                if (stack.getItem() instanceof net.minecraft.item.ArrowItem) {
+                    arrowStack = stack;
+                    break;
+                }
+            }
+        }
 
         if(arrowStack.isEmpty() && !user.getAbilities().creativeMode){
             return ActionResult.FAIL;
@@ -56,7 +71,6 @@ public class ShortBowItem extends Item{
 
         user.incrementStat(Stats.USED.getOrCreateStat(this));
 
-        //Set firing cooldown
         user.getItemCooldownManager().set(bowStack, COOLDOWN_TICKS);
 
         return ActionResult.CONSUME;
