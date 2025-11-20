@@ -20,6 +20,12 @@ public class ModItems{
             new Item.Settings().maxDamage(384)
     );
 
+    public static final Item IRON_BOW = register(
+            "iron_bow",
+            IronBowItem::new,
+            new Item.Settings().maxDamage(768)
+    );
+
     private static Item register(String name, Function<Item.Settings, Item> itemFactory, Item.Settings settings) {
         RegistryKey<Item> key = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(Takeabow.MOD_ID, name));
         Item item = itemFactory.apply(settings.registryKey(key));
@@ -32,6 +38,7 @@ public class ModItems{
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
             entries.add(SHORTBOW);
+            entries.add(IRON_BOW);
         });
     }
 }
